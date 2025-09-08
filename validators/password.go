@@ -1,4 +1,4 @@
-package validator
+package validators
 
 import (
 	"regexp"
@@ -14,5 +14,5 @@ var PasswdValidator validator.Func = func(fl validator.FieldLevel) bool {
 		return regexp.MustCompile(`^([0-9].*[a-zA-Z]|[a-zA-Z].*[0-9]).*$`).MatchString(data)
 	}
 	return ok
-	
+
 }

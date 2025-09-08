@@ -1,0 +1,455 @@
+basePath: /
+definitions:
+  web.CommnetByPostId:
+    properties:
+      content:
+        description: 评论内容
+        example: 这是一条评论
+        type: string
+      postId:
+        description: 文章ID
+        example: 1
+        type: integer
+    required:
+    - postId
+    type: object
+  web.CreatePost:
+    properties:
+      content:
+        description: 文章内容
+        example: 这是文章内容
+        type: string
+      title:
+        description: 文章标题
+        example: 我的第一篇文章
+        type: string
+      userId:
+        description: 用户ID
+        example: 1
+        type: integer
+    required:
+    - content
+    - title
+    - userId
+    type: object
+  web.UpPostByUserId:
+    properties:
+      content:
+        description: 文章内容
+        example: 更新后的内容
+        type: string
+      postId:
+        description: 文章ID
+        example: 1
+        type: integer
+      title:
+        description: 文章标题
+        example: 更新后的标题
+        type: string
+      userId:
+        description: 用户ID
+        example: 1
+        type: integer
+    required:
+    - postId
+    - userId
+    type: object
+  web.UserLogin:
+    properties:
+      password:
+        description: 密码
+        example: password123
+        type: string
+      username:
+        description: 用户名
+        example: testuser
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  web.UserRegister:
+    properties:
+      email:
+        description: 邮箱
+        example: test@example.com
+        type: string
+      password:
+        description: 密码
+        example: password123
+        type: string
+      username:
+        description: 用户名
+        example: testuser
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: RESTful API 文档示例
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Gin Web API
+  version: "1.0"
+paths:
+  /api/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户登录获取token
+      parameters:
+      - description: 用户登录信息
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/web.UserLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 登录成功
+          schema:
+            additionalProperties: true
+            type: object
+        "1001":
+          description: 参数校验失败
+          schema:
+            additionalProperties: true
+            type: object
+        "1002":
+          description: 用户名或密码错误
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 用户登录
+      tags:
+      - 用户管理
+  /api/register:
+    post:
+      consumes:
+      - application/json
+      description: 注册新用户账号
+      parameters:
+      - description: 用户注册信息
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/web.UserRegister'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 注册成功
+          schema:
+            additionalProperties: true
+            type: object
+        "1001":
+          description: 参数校验失败
+          schema:
+            additionalProperties: true
+            type: object
+        "1002":
+          description: 注册失败
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 用户注册
+      tags:
+      - 用户管理
+  /api/v1/comment:
+    get:
+      consumes:
+      - application/json
+      description: 查询文章下的所有评论
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 文章ID
+        example: 1
+        in: query
+        name: postId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功
+          schema:
+            additionalProperties: true
+            type: object
+        "1001":
+          description: 参数校验失败
+          schema:
+            additionalProperties: true
+            type: object
+        "1002":
+          description: 查询失败
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 查询评论
+      tags:
+      - 评论管理
+    post:
+      consumes:
+      - application/json
+      description: 为文章创建评论
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 评论信息
+        in: body
+        name: comment
+        required: true
+        schema:
+          $ref: '#/definitions/web.CommnetByPostId'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 评论成功
+          schema:
+            additionalProperties: true
+            type: object
+        "1001":
+          description: 参数校验失败
+          schema:
+            additionalProperties: true
+            type: object
+        "1002":
+          description: 评论失败
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 创建评论
+      tags:
+      - 评论管理
+  /api/v1/post:
+    delete:
+      consumes:
+      - application/json
+      description: 根据用户ID和文章ID删除文章
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 文章删除信息
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/web.UpPostByUserId'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除成功
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: 参数校验失败
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: 删除失败
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 删除文章
+      tags:
+      - 文章管理
+    get:
+      consumes:
+      - application/json
+      description: 根据标题查询单个文章
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 文章标题
+        example: '"我的第一篇文章"'
+        in: query
+        name: title
+        required: true
+        type: string
+      - description: 用户ID
+        example: 1
+        in: query
+        name: userId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: 参数校验失败
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: 查询失败
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 查询单个文章
+      tags:
+      - 文章管理
+    post:
+      consumes:
+      - application/json
+      description: 创建新文章
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 文章信息
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/web.CreatePost'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 创建成功
+          schema:
+            additionalProperties: true
+            type: object
+        "1001":
+          description: 参数校验失败
+          schema:
+            additionalProperties: true
+            type: object
+        "1002":
+          description: 创建失败
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 创建文章
+      tags:
+      - 文章管理
+    put:
+      consumes:
+      - application/json
+      description: 根据用户ID和文章ID更新文章
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 文章更新信息
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/web.UpPostByUserId'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新成功
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: 参数校验失败
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: 更新失败
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 更新文章
+      tags:
+      - 文章管理
+  /api/v1/post/all:
+    get:
+      consumes:
+      - application/json
+      description: 根据用户ID查询所有文章
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 用户ID
+        example: 1
+        in: query
+        name: userId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: 参数校验失败
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: 查询失败
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 查询用户文章列表
+      tags:
+      - 文章管理
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

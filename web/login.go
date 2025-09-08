@@ -14,10 +14,21 @@ import (
 )
 
 type UserLogin struct {
-	Username string `json:"username" binding:"required"`
-	Password string `json:"password" binding:"required"`
+	Username string `json:"username" binding:"required" example:"testuser"`    // 用户名
+	Password string `json:"password" binding:"required" example:"password123"` // 密码
 }
 
+// Login 用户登录接口
+// @Summary 用户登录
+// @Description 用户登录获取token
+// @Tags 用户管理
+// @Accept json
+// @Produce json
+// @Param user body UserLogin true "用户登录信息"
+// @Success 200 {object} map[string]interface{} "登录成功"
+// @Failure 1001 {object} map[string]interface{} "参数校验失败"
+// @Failure 1002 {object} map[string]interface{} "用户名或密码错误"
+// @Router /api/login [post]
 func Login(db *gorm.DB, rdb *redis.Client) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var loginUser UserLogin

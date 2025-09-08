@@ -24,7 +24,7 @@ func RegisterUserService(c *gin.Context, db *gorm.DB, user models.User) {
 	slectErr := u.SelectUserByName(user.Username)
 	if slectErr == nil {
 		c.JSON(400, gin.H{
-			"code": "400",
+			"code": "1001",
 			"mgs":  "用户名已存在",
 		})
 		return
@@ -33,7 +33,7 @@ func RegisterUserService(c *gin.Context, db *gorm.DB, user models.User) {
 	selectEmailErr := u.SelectUserByEmail(user.Email)
 	if selectEmailErr == nil {
 		c.JSON(400, gin.H{
-			"code": "400",
+			"code": "1001",
 			"msg":  "邮箱已被注册",
 		})
 		return
@@ -42,7 +42,7 @@ func RegisterUserService(c *gin.Context, db *gorm.DB, user models.User) {
 	hashedPassword, hashErr := tools.HashPassword(user.Password)
 	if hashErr != nil {
 		c.JSON(500, gin.H{
-			"code":   "500",
+			"code":   "1002",
 			"msg":    "注册失败",
 			"errors": hashErr,
 		})
@@ -52,7 +52,7 @@ func RegisterUserService(c *gin.Context, db *gorm.DB, user models.User) {
 	registerErr := u.CreateUser(&models.User{Username: user.Username, Password: hashedPassword, Email: user.Email})
 	if registerErr != nil {
 		c.JSON(500, gin.H{
-			"code":   "500",
+			"code":   "1002",
 			"msg":    "注册失败",
 			"errors": registerErr,
 		})

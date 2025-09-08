@@ -2,7 +2,7 @@ package models
 
 import "gorm.io/gorm"
 
-// 用户账号
+// 用户账号模型
 type User struct {
 	ID         uint64 `gorm:"primaryKey" json:"id"`
 	gorm.Model        //自动补全ID，CreateAt,UpdateAt,Delete软删除字段

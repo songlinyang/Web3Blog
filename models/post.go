@@ -2,7 +2,7 @@ package models
 
 import "gorm.io/gorm"
 
-// 博客推文
+// 博客推文模型
 type Post struct {
 	gorm.Model //自动补全ID，CreateAt,UpdateAt,Delete软删除字段
 	ID         uint64

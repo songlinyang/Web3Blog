@@ -4,6 +4,7 @@ import (
 	"myblog/middlewares"
 	"myblog/migrate"
 	"myblog/myredis"
+	"myblog/validators"
 	"myblog/web"
 	"myblog/zaplogger"
 	"os"
@@ -11,31 +12,37 @@ import (
 	"syscall"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/go-playground/validator/v10"
 	"github.com/go-redis/redis/v8"
 	"go.uber.org/zap"
-	"gorm.io/gorm"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
-
-//type Config struct {
-//	Db  *gorm.DB
-//	Rdb *myredis.Client
-//}
-
-//var config *Config
-//
-//func init() {
-//
-//
-//	config = &Config{Db: db, Rdb: rdb}
-//
-//}
 
 // gin程序入口文件
 var (
-	db  *gorm.DB
+	//db  *gorm.DB
 	rdb *redis.Client
 )
 
+// @title Gin Web API
+// @version 1.0
+// @description RESTful API 文档示例
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host localhost:8080
+// @BasePath /
+
+// @securityDefinitions.basic BasicAuth
 func main() {
 	//初始化logger
 	//初始化日志模块
@@ -53,6 +60,12 @@ func main() {
 
 	//初始化gin
 	r := gin.Default()
+
+	// 配置Swagger UI - 使用自定义配置指向正确的swagger.json
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("/swagger.json")))
+
+	// 配置swagger.json文件访问
+	r.StaticFile("/swagger.json", "./docs/swagger.json")
 	api := r.Group("/api")
 	// 注册接口
 	api.POST("/register", web.Register(db))
@@ -61,11 +74,11 @@ func main() {
 
 	// 路由分版本
 	v1 := r.Group("/api/v1")
-	// 设置全局中间件
+	// 设置中间件
 	v1.Use(
 		middlewares.LatencyLogger(),
-		middlewares.CORSMiddleware(),
-		middlewares.JWTAuth(),
+		//middlewares.CORSMiddleware(),
+		middlewares.JWTAuth(rdb),
 	)
 	{
 		//文章Restful API接口
@@ -82,23 +95,24 @@ func main() {
 
 		//评论Restful API接口
 		//评论功能
+		//添加评论
 		v1.POST("/comment", web.CreateCommentByPostIdWeb(db))
+		//评论查询
+		v1.GET("/comment", web.QueryCommentByPostIdWeb(db))
+	}
+	//注册自定义验证器
+	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		err := v.RegisterValidation("passwordReg", validators.PasswdValidator)
+		if err != nil {
+			return
+		}
 	}
 	err := r.Run(":8080")
 	if err != nil {
 		return
 	}
 
-	//fmt.Print("Hello World")
-	////插入用户
-	//user := models.User{Username: "admin", Password: "123456", Email: "123456@qq.com"}
-
-	//err := u.CreateUser(&user)
-	//if err != nil {
-	//	logger.Error(err.Error())
-	//}
-	//logger.Debug("User created")
-
+	// 监听程序终止信号，进行资源释放
 	go listenSignal()
 
 }

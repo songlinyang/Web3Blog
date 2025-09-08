@@ -1,10 +1,11 @@
 package services
 
 import (
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"myblog/models"
 	Req "myblog/repository"
+
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // 创建评论
@@ -21,7 +22,7 @@ func CreateCommentService(ctx *gin.Context, db *gorm.DB, comment models.Comment)
 	if queryUserErr != nil {
 		return queryUserErr
 	}
-	err := c.CreateComment(&models.Comment{UserID: userId.(uint64), PostID: comment.PostID})
+	err := c.CreateComment(&models.Comment{UserID: userId.(uint64), PostID: comment.PostID, Content: comment.Content})
 	if err != nil {
 		return err
 	}

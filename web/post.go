@@ -14,26 +14,38 @@ import (
 
 // Post对象参数值
 type CreatePost struct {
-	Title   string `json:"title" binding:"required"`
-	Content string `json:"content" binding:"required"`
-	UserId  uint64 `json:"userId" binding:"required"`
+	Title   string `json:"title" binding:"required" example:"我的第一篇文章"`  // 文章标题
+	Content string `json:"content" binding:"required" example:"这是文章内容"` // 文章内容
+	UserId  uint64 `json:"userId" binding:"required" example:"1"`       // 用户ID
 }
 type PostByTitle struct {
-	Title  string `form:"title" binding:"required"`
-	UserId uint64 `form:"userId" binding:"number,required"`
+	Title  string `form:"title" binding:"required" example:"我的第一篇文章"`   // 文章标题
+	UserId uint64 `form:"userId" binding:"number,required" example:"1"` // 用户ID
 }
 type PostByUserId struct {
-	UserId uint64 `form:"userId" binding:"number,required"`
+	UserId uint64 `form:"userId" binding:"number,required" example:"1"` // 用户ID
 }
 
 type UpPostByUserId struct {
-	UserId  uint64 `form:"userId" binding:"number,required"`
-	PostId  uint64 `form:"postId" binding:"number,required"`
-	Title   string `form:"title"`
-	Content string `form:"content"`
+	UserId  uint64 `form:"userId" binding:"number,required" example:"1"` // 用户ID
+	PostId  uint64 `form:"postId" binding:"number,required" example:"1"` // 文章ID
+	Title   string `form:"title" example:"更新后的标题"`                       // 文章标题
+	Content string `form:"content" example:"更新后的内容"`                     // 文章内容
 }
 
-// 新增文章
+// PostCreateWeb 创建文章接口
+// @Summary 创建文章
+// @Description 创建新文章
+// @Tags 文章管理
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param Authorization header string true "Bearer token"
+// @Param post body CreatePost true "文章信息"
+// @Success 200 {object} map[string]interface{} "创建成功"
+// @Failure 1001 {object} map[string]interface{} "参数校验失败"
+// @Failure 1002 {object} map[string]interface{} "创建失败"
+// @Router /api/v1/post [post]
 func PostCreateWeb(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var createPost CreatePost
@@ -69,8 +81,20 @@ func PostCreateWeb(db *gorm.DB) gin.HandlerFunc {
 	}
 }
 
-// 查询单个文章
-
+// QueryOnePostByTitleService 查询单个文章接口
+// @Summary 查询单个文章
+// @Description 根据标题查询单个文章
+// @Tags 文章管理
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param Authorization header string true "Bearer token"
+// @Param title query string true "文章标题" example("我的第一篇文章")
+// @Param userId query int true "用户ID" example(1)
+// @Success 200 {object} map[string]interface{} "查询成功"
+// @Failure 400 {object} map[string]interface{} "参数校验失败"
+// @Failure 500 {object} map[string]interface{} "查询失败"
+// @Router /api/v1/post [get]
 func QueryOnePostByTitleService(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var postByTitle PostByTitle
@@ -106,7 +130,19 @@ func QueryOnePostByTitleService(db *gorm.DB) gin.HandlerFunc {
 	}
 }
 
-// 根据用户id查询多篇文章
+// QueryPostListByUserId 查询用户文章列表接口
+// @Summary 查询用户文章列表
+// @Description 根据用户ID查询所有文章
+// @Tags 文章管理
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param Authorization header string true "Bearer token"
+// @Param userId query int true "用户ID" example(1)
+// @Success 200 {object} map[string]interface{} "查询成功"
+// @Failure 400 {object} map[string]interface{} "参数校验失败"
+// @Failure 500 {object} map[string]interface{} "查询失败"
+// @Router /api/v1/post/all [get]
 func QueryPostListByUserId(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var postByUserId PostByUserId
@@ -143,7 +179,19 @@ func QueryPostListByUserId(db *gorm.DB) gin.HandlerFunc {
 	}
 }
 
-// 根据用户ID更新文章
+// UpdatePostByUserId 更新文章接口
+// @Summary 更新文章
+// @Description 根据用户ID和文章ID更新文章
+// @Tags 文章管理
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param Authorization header string true "Bearer token"
+// @Param post body UpPostByUserId true "文章更新信息"
+// @Success 200 {object} map[string]interface{} "更新成功"
+// @Failure 400 {object} map[string]interface{} "参数校验失败"
+// @Failure 500 {object} map[string]interface{} "更新失败"
+// @Router /api/v1/post [put]
 func UpdatePostByUserId(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var upPostByUserId UpPostByUserId
@@ -170,7 +218,19 @@ func UpdatePostByUserId(db *gorm.DB) gin.HandlerFunc {
 	}
 }
 
-// 根据用户删除数据
+// DeletePostByUserId 删除文章接口
+// @Summary 删除文章
+// @Description 根据用户ID和文章ID删除文章
+// @Tags 文章管理
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param Authorization header string true "Bearer token"
+// @Param post body UpPostByUserId true "文章删除信息"
+// @Success 200 {object} map[string]interface{} "删除成功"
+// @Failure 400 {object} map[string]interface{} "参数校验失败"
+// @Failure 500 {object} map[string]interface{} "删除失败"
+// @Router /api/v1/post [delete]
 func DeletePostByUserId(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var deleteUser UpPostByUserId

@@ -2,7 +2,7 @@ package models
 
 import "gorm.io/gorm"
 
-// 评论
+// 评论模型
 type Comment struct {
 	gorm.Model        //自动补全ID，CreateAt,UpdateAt,Delete软删除字段
 	ID         uint64 `gorm:"primaryKey;autoIncrement"`
