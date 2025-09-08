@@ -1,0 +1,5 @@
+[template]
+src = "nginx.tmpl"
+dest = "/etc/nginx/conf.d/myapp.conf"
+keys = ["/nginx/root_dir"]
+reload_cmd = "/usr/sbin/nginx -s reload"

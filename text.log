@@ -1,0 +1,11 @@
+2025-09-08T11:25:17.518+0800	DEBUG	web/login.go:38	执行用户登录业务逻辑
+2025-09-08T11:25:17.518+0800	DEBUG	web/login.go:40	开始登录用户{{0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} root admin123 }
+2025-09-08T11:25:17.518+0800	DEBUG	services/userService.go:74	检查用户登录的用户名和密码是否存在数据库中
+2025-09-08T11:25:17.518+0800	DEBUG	repository/userRep.go:39	根据用户名查询数据,查询用户名：{username 15 0 root <nil>}
+2025-09-08T11:25:18.203+0800	DEBUG	services/userService.go:77	
+2025-09-08T11:25:18.203+0800	DEBUG	services/userService.go:79	查询成功：{{7 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} root $2a$10$vTHdwfEBfuMz8DVNUxkAJeOw8DZGNFMg6Y9..NXYhCsOTuIo78y/i }
+2025-09-08T11:25:18.293+0800	DEBUG	services/userService.go:97	用户名和密码校验通过！开始生成token
+2025-09-08T11:25:18.431+0800	DEBUG	web/login.go:42	登录用户成功{{0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} root admin123 }
+2025-09-08T11:26:01.908+0800	DEBUG	myblog/main.go:36	START!
+2025-09-08T11:26:01.908+0800	DEBUG	migrate/migrate.go:15	初始化日志模块成功
+2025-09-08T11:26:02.558+0800	DEBUG	migrate/migrate.go:24	连接数据库成功,开始迁移
