@@ -29,6 +29,15 @@ func RegisterUserService(c *gin.Context, db *gorm.DB, user models.User) {
 		})
 		return
 	}
+	//检查邮件地址是否重复
+	selectEmailErr := u.SelectUserByEmail(user.Email)
+	if selectEmailErr == nil {
+		c.JSON(400, gin.H{
+			"code": "400",
+			"msg":  "邮箱已被注册",
+		})
+		return
+	}
 	//加密密码,存入数据库
 	hashedPassword, hashErr := tools.HashPassword(user.Password)
 	if hashErr != nil {
@@ -104,17 +113,14 @@ func LoginUserService(c *gin.Context, db *gorm.DB, rdb *redis.Client, user model
 	var exptime int64
 	exptime = time.Now().Add(time.Duration(x) * time.Hour).Unix()
 	var claims = tools.MyClaims{ //这里改成了自定义的Claims结构体，若使用jwt自带jwt.MapClaims,则无法拿到username。需要理解
+		UserId:   userResult.ID,
 		Username: userResult.Username,
 		Roles:    roles,
 		Exp:      exptime, //失效时间，8小时失效，观察效果
 	}
 	//判断redis是否存在缓存，如果存在则直接从redis进行获取
-	currentToken, err := rdb.Get(ctx, userResult.Username).Result()
-	if err != nil {
-		panic(err)
-	}
-	var token string
-	if currentToken == "" {
+	currentToken, getRedisErr := rdb.Get(ctx, userResult.Username).Result()
+	if getRedisErr != nil { //表示没有找到redis缓存，进行加入缓存操作
 		token, generateErr := tools.GenerateToken(&claims)
 		if generateErr != nil {
 			c.JSON(500, gin.H{
@@ -134,14 +140,16 @@ func LoginUserService(c *gin.Context, db *gorm.DB, rdb *redis.Client, user model
 			panic(redisSetErr.Err())
 		}
 		zap.S().Debug("token保存redis缓存成功")
+		currentToken = token
 	}
-	token = currentToken
 	//判断token是否失效
 	c.JSON(http.StatusOK, gin.H{
-		"code":  200,
-		"msg":   "用户登录成功",
-		"token": token,
-		"exp":   exptime,
+		"code":   200,
+		"msg":    "用户登录成功",
+		"userId": userResult.ID,
+		"rols":   roles,
+		"token":  currentToken,
+		"exp":    exptime,
 	})
 
 }

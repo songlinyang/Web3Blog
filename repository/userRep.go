@@ -23,11 +23,31 @@ func (u *UserRep) CreateUser(user *models.User) error {
 
 }
 
+// 根据用户ID查询数据
+func (u *UserRep) SelectUserById(id uint64) error {
+	err := u.Db.Debug().First(&models.User{}, id).Error
+	if err == nil {
+		zap.S().Debug("当前用户存在，有效")
+	}
+	return err
+}
+
 // 根据用户名查询数据
 func (u *UserRep) SelectUserByName(username string) error {
 	zap.S().Debug("根据用户名查询数据,查询用户名：", zap.String("username", username))
 	var user models.User
 	err := u.Db.Debug().Select("id").Where("username = ?", username).First(&user)
+	if err == nil {
+		zap.S().Debug("注册成功,查询结果：", user)
+	}
+	return err.Error
+}
+
+// 根据邮箱地址查询数据
+func (u *UserRep) SelectUserByEmail(email string) error {
+	zap.S().Debug("根据邮箱地址查询数据：", zap.String("email", email))
+	var user models.User
+	err := u.Db.Debug().Select("id").Where("email = ?", email).First(&user)
 	if err == nil {
 		zap.S().Debug("注册成功,查询结果：", user)
 	}

@@ -8,6 +8,7 @@ import (
 
 // 生成JWT令牌
 type MyClaims struct {
+	UserId        uint64   `json:"userId"`
 	Username      string   `json:"username"`
 	Roles         []string `json:"roles"`
 	Exp           int64    `json:"exp"`

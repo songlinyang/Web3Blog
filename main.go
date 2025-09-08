@@ -1,10 +1,7 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/go-redis/redis/v8"
-	"go.uber.org/zap"
-	"gorm.io/gorm"
+	"myblog/middlewares"
 	"myblog/migrate"
 	"myblog/myredis"
 	"myblog/web"
@@ -12,6 +9,11 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis/v8"
+	"go.uber.org/zap"
+	"gorm.io/gorm"
 )
 
 //type Config struct {
@@ -57,10 +59,36 @@ func main() {
 	// 登录接口
 	api.POST("/login", web.Login(db, rdb))
 
+	// 路由分版本
+	v1 := r.Group("/api/v1")
+	// 设置全局中间件
+	v1.Use(
+		middlewares.LatencyLogger(),
+		middlewares.CORSMiddleware(),
+		middlewares.JWTAuth(),
+	)
+	{
+		//文章Restful API接口
+		//新增文章
+		v1.GET("/post", web.QueryOnePostByTitleService(db))
+		//查询当前用户所有文章
+		v1.GET("/post/all", web.QueryPostListByUserId(db))
+		//查询当前用户指定文章
+		v1.POST("/post", web.PostCreateWeb(db))
+		//更新当前用户指定文章
+		v1.PUT("/post", web.UpdatePostByUserId(db))
+		//删除当前该用户指定文章
+		v1.DELETE("/post", web.DeletePostByUserId(db))
+
+		//评论Restful API接口
+		//评论功能
+		v1.POST("/comment", web.CreateCommentByPostIdWeb(db))
+	}
 	err := r.Run(":8080")
 	if err != nil {
 		return
 	}
+
 	//fmt.Print("Hello World")
 	////插入用户
 	//user := models.User{Username: "admin", Password: "123456", Email: "123456@qq.com"}
