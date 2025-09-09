@@ -75,7 +75,7 @@ go build -o myblog main.go
 ```
 http://localhost:8080/swagger/index.html
 ```
-![Uploading image.png…]()
+![https://github.com/songlinyang/Web3Blog/blob/main/docs/img.png?raw=true]()
 
 ### Swagger 接口使用说明
 
