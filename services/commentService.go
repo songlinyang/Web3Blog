@@ -30,19 +30,19 @@ func CreateCommentService(ctx *gin.Context, db *gorm.DB, comment models.Comment)
 }
 
 // 查询当前文章下的所有评论
-func QueryCommentByPostIdService(db *gorm.DB, comment models.Comment) (commentReuslt models.Comment, err error) {
+func QueryCommentByPostIdService(db *gorm.DB, comment models.Comment) (commentReuslt []models.Comment, err error) {
 	c := Req.CommentRep{Db: db}
 	p := Req.PostRep{Db: db}
 	var comments []models.Comment
 	//判断是否存在该文章
-	var posts []models.Post
-	postErr := p.ReadPostByUserID(&models.Post{ID: comment.PostID}, &posts)
+	//var posts models.Post
+	postErr := p.ReadPostByID(&models.Post{ID: comment.PostID})
 	if postErr != nil {
-		panic(postErr)
+		return []models.Comment{}, postErr
 	}
 	err = c.QueryCommentByPostId(&comment, &comments)
 	if err != nil {
-		return models.Comment{}, err
+		return []models.Comment{}, err
 	}
-	return commentReuslt, nil
+	return comments, nil
 }

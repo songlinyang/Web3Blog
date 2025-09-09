@@ -1,0 +1,106 @@
+2025-09-09T09:33:56.374+0800	DEBUG	cmd/main.go:53	START!
+2025-09-09T09:33:56.374+0800	DEBUG	migrate/migrate.go:16	初始化日志模块成功
+2025-09-09T09:33:56.849+0800	DEBUG	migrate/migrate.go:25	连接数据库成功,开始迁移
+2025-09-09T09:34:04.391+0800	DEBUG	migrate/migrate.go:33	数据迁移成功，迁移表结构：	{"tables": "User,Post,Comment"}
+2025-09-09T09:34:04.391+0800	DEBUG	myredis/myredis.go:16	Redis DB:0Redis Addr:18.141.190.134:6379
+2025-09-09T09:34:04.392+0800	DEBUG	myredis/myredis.go:22	Redis server:Redis<18.141.190.134:6379 db:0>
+2025-09-09T09:34:28.991+0800	DEBUG	web/login.go:49	执行用户登录业务逻辑
+2025-09-09T09:34:28.991+0800	DEBUG	web/login.go:51	开始登录用户{0 {0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} testuser password123 }
+2025-09-09T09:34:28.991+0800	DEBUG	services/userService.go:83	检查用户登录的用户名和密码是否存在数据库中
+2025-09-09T09:34:28.991+0800	DEBUG	repository/userRep.go:59	根据用户名查询数据,查询用户名：{username 15 0 testuser <nil>}
+2025-09-09T09:34:29.193+0800	DEBUG	services/userService.go:88	查询成功：{0 {0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}}   }
+2025-09-09T09:34:29.193+0800	DEBUG	web/login.go:53	登录用户成功{0 {0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} testuser password123 }
+2025-09-09T09:34:43.388+0800	DEBUG	web/register.go:50	开始注册用户{0 {0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} testuser password123 test@example.com}
+2025-09-09T09:34:43.388+0800	DEBUG	repository/userRep.go:37	根据用户名查询数据,查询用户名：{username 15 0 testuser <nil>}
+2025-09-09T09:34:43.558+0800	DEBUG	repository/userRep.go:48	根据邮箱地址查询数据：{email 15 0 test@example.com <nil>}
+2025-09-09T09:34:43.839+0800	DEBUG	repository/userRep.go:17	开始将模型数据插入数据&{0 {0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} testuser $2a$10$fRptdKg5O3OO/XSZQ2hGTODd0Y1qyQL2bjHosikuo03ejOkOjd0km test@example.com}
+2025-09-09T09:34:44.199+0800	DEBUG	repository/userRep.go:20	插入数据成功
+2025-09-09T09:34:44.200+0800	DEBUG	web/register.go:52	注册用户成功{0 {0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} testuser password123 test@example.com}
+2025-09-09T09:34:56.253+0800	DEBUG	web/login.go:49	执行用户登录业务逻辑
+2025-09-09T09:34:56.254+0800	DEBUG	web/login.go:51	开始登录用户{0 {0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} testuser password123 }
+2025-09-09T09:34:56.254+0800	DEBUG	services/userService.go:83	检查用户登录的用户名和密码是否存在数据库中
+2025-09-09T09:34:56.254+0800	DEBUG	repository/userRep.go:59	根据用户名查询数据,查询用户名：{username 15 0 testuser <nil>}
+2025-09-09T09:34:56.582+0800	DEBUG	services/userService.go:86	
+2025-09-09T09:34:56.582+0800	DEBUG	services/userService.go:88	查询成功：{16 {0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} testuser $2a$10$fRptdKg5O3OO/XSZQ2hGTODd0Y1qyQL2bjHosikuo03ejOkOjd0km }
+2025-09-09T09:34:56.694+0800	DEBUG	services/userService.go:106	用户名和密码校验通过！开始生成token
+2025-09-09T09:34:56.849+0800	DEBUG	services/userService.go:133	成功生成用户名:testusertoken:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2LCJ1c2VybmFtZSI6InRlc3R1c2VyIiwicm9sZXMiOlsiYWRtaW4iXSwiZXhwIjoxNzU3Mzg1Mjk2LCJNYXBDbGFpbXMiOm51bGx9.1th3qfNNdpgj-96Ue5Wiugm_6QIx5zAvkM1FvmSP4Gs
+2025-09-09T09:34:56.849+0800	DEBUG	services/userService.go:135	启动redis缓存当前登录成功的username
+2025-09-09T09:34:56.849+0800	DEBUG	services/userService.go:136	exptime: 1757385296 second: 1h0m0s
+2025-09-09T09:34:56.936+0800	DEBUG	services/userService.go:142	token保存redis缓存成功
+2025-09-09T09:34:56.936+0800	DEBUG	web/login.go:53	登录用户成功{0 {0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} testuser password123 }
+2025-09-09T09:37:19.007+0800	DEBUG	cmd/main.go:53	START!
+2025-09-09T09:37:19.008+0800	DEBUG	migrate/migrate.go:16	初始化日志模块成功
+2025-09-09T09:37:19.528+0800	DEBUG	migrate/migrate.go:25	连接数据库成功,开始迁移
+2025-09-09T09:37:27.142+0800	DEBUG	migrate/migrate.go:33	数据迁移成功，迁移表结构：	{"tables": "User,Post,Comment"}
+2025-09-09T09:37:27.142+0800	DEBUG	myredis/myredis.go:16	Redis DB:0Redis Addr:18.141.190.134:6379
+2025-09-09T09:37:27.142+0800	DEBUG	myredis/myredis.go:22	Redis server:Redis<18.141.190.134:6379 db:0>
+2025-09-09T09:42:01.535+0800	DEBUG	cmd/main.go:53	START!
+2025-09-09T09:42:01.535+0800	DEBUG	migrate/migrate.go:16	初始化日志模块成功
+2025-09-09T09:42:02.073+0800	DEBUG	migrate/migrate.go:25	连接数据库成功,开始迁移
+2025-09-09T09:42:09.430+0800	DEBUG	migrate/migrate.go:33	数据迁移成功，迁移表结构：	{"tables": "User,Post,Comment"}
+2025-09-09T09:42:09.430+0800	DEBUG	myredis/myredis.go:16	Redis DB:0Redis Addr:18.141.190.134:6379
+2025-09-09T09:42:09.430+0800	DEBUG	myredis/myredis.go:22	Redis server:Redis<18.141.190.134:6379 db:0>
+2025-09-09T09:43:50.980+0800	DEBUG	cmd/main.go:53	START!
+2025-09-09T09:43:50.981+0800	DEBUG	migrate/migrate.go:16	初始化日志模块成功
+2025-09-09T09:43:51.466+0800	DEBUG	migrate/migrate.go:25	连接数据库成功,开始迁移
+2025-09-09T09:43:58.967+0800	DEBUG	migrate/migrate.go:33	数据迁移成功，迁移表结构：	{"tables": "User,Post,Comment"}
+2025-09-09T09:43:58.968+0800	DEBUG	myredis/myredis.go:16	Redis DB:0Redis Addr:18.141.190.134:6379
+2025-09-09T09:43:58.968+0800	DEBUG	myredis/myredis.go:22	Redis server:Redis<18.141.190.134:6379 db:0>
+2025-09-09T10:21:11.570+0800	DEBUG	services/postService.go:38	{0xc00019c600}
+2025-09-09T10:33:53.923+0800	DEBUG	cmd/main.go:53	START!
+2025-09-09T10:33:53.923+0800	DEBUG	migrate/migrate.go:16	初始化日志模块成功
+2025-09-09T10:33:54.430+0800	DEBUG	migrate/migrate.go:25	连接数据库成功,开始迁移
+2025-09-09T10:34:02.030+0800	DEBUG	migrate/migrate.go:33	数据迁移成功，迁移表结构：	{"tables": "User,Post,Comment"}
+2025-09-09T10:34:02.030+0800	DEBUG	myredis/myredis.go:16	Redis DB:0Redis Addr:18.141.190.134:6379
+2025-09-09T10:34:02.031+0800	DEBUG	myredis/myredis.go:22	Redis server:Redis<18.141.190.134:6379 db:0>
+2025-09-09T10:34:27.206+0800	DEBUG	services/postService.go:38	{0xc00011a600}
+2025-09-09T10:34:51.195+0800	DEBUG	web/post.go:66	开始新增文章，文章Title: 我的第一篇文章
+2025-09-09T10:34:51.195+0800	DEBUG	services/postService.go:15	{0xc00011a600}
+2025-09-09T10:35:30.128+0800	DEBUG	web/login.go:49	执行用户登录业务逻辑
+2025-09-09T10:35:30.128+0800	DEBUG	web/login.go:51	开始登录用户{0 {0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} testuser password123 }
+2025-09-09T10:35:30.128+0800	DEBUG	services/userService.go:83	检查用户登录的用户名和密码是否存在数据库中
+2025-09-09T10:35:30.137+0800	DEBUG	repository/userRep.go:59	根据用户名查询数据,查询用户名：{username 15 0 testuser <nil>}
+2025-09-09T10:35:30.494+0800	DEBUG	services/userService.go:86	
+2025-09-09T10:35:30.494+0800	DEBUG	services/userService.go:88	查询成功：{16 {0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} testuser $2a$10$fRptdKg5O3OO/XSZQ2hGTODd0Y1qyQL2bjHosikuo03ejOkOjd0km }
+2025-09-09T10:35:30.611+0800	DEBUG	services/userService.go:106	用户名和密码校验通过！开始生成token
+2025-09-09T10:35:30.696+0800	DEBUG	services/userService.go:133	成功生成用户名:testusertoken:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2LCJ1c2VybmFtZSI6InRlc3R1c2VyIiwicm9sZXMiOlsiYWRtaW4iXSwiZXhwIjoxNzU3Mzg4OTMwLCJNYXBDbGFpbXMiOm51bGx9.a6STCVZIWAIBdqsFLdEqMAe2IRx28wROA0rwRzKmkO4
+2025-09-09T10:35:30.696+0800	DEBUG	services/userService.go:135	启动redis缓存当前登录成功的username
+2025-09-09T10:35:30.696+0800	DEBUG	services/userService.go:136	exptime: 1757388930 second: 1h0m0s
+2025-09-09T10:35:30.794+0800	DEBUG	services/userService.go:142	token保存redis缓存成功
+2025-09-09T10:35:30.794+0800	DEBUG	web/login.go:53	登录用户成功{0 {0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}} testuser password123 }
+2025-09-09T10:35:44.556+0800	DEBUG	web/post.go:66	开始新增文章，文章Title: this is my blog
+2025-09-09T10:35:44.556+0800	DEBUG	services/postService.go:15	{0xc00011a600}
+2025-09-09T10:35:56.081+0800	DEBUG	services/postService.go:38	{0xc00011a600}
+2025-09-09T10:38:55.844+0800	DEBUG	cmd/main.go:53	START!
+2025-09-09T10:38:55.844+0800	DEBUG	migrate/migrate.go:16	初始化日志模块成功
+2025-09-09T10:38:56.370+0800	DEBUG	migrate/migrate.go:25	连接数据库成功,开始迁移
+2025-09-09T10:39:03.860+0800	DEBUG	migrate/migrate.go:33	数据迁移成功，迁移表结构：	{"tables": "User,Post,Comment"}
+2025-09-09T10:39:03.861+0800	DEBUG	myredis/myredis.go:16	Redis DB:0Redis Addr:18.141.190.134:6379
+2025-09-09T10:39:03.861+0800	DEBUG	myredis/myredis.go:22	Redis server:Redis<18.141.190.134:6379 db:0>
+2025-09-09T10:41:23.611+0800	DEBUG	cmd/main.go:53	START!
+2025-09-09T10:41:23.612+0800	DEBUG	migrate/migrate.go:16	初始化日志模块成功
+2025-09-09T10:41:24.098+0800	DEBUG	migrate/migrate.go:25	连接数据库成功,开始迁移
+2025-09-09T10:41:32.737+0800	DEBUG	migrate/migrate.go:33	数据迁移成功，迁移表结构：	{"tables": "User,Post,Comment"}
+2025-09-09T10:41:32.737+0800	DEBUG	myredis/myredis.go:16	Redis DB:0Redis Addr:18.141.190.134:6379
+2025-09-09T10:41:32.737+0800	DEBUG	myredis/myredis.go:22	Redis server:Redis<18.141.190.134:6379 db:0>
+2025-09-09T10:43:18.945+0800	DEBUG	cmd/main.go:53	START!
+2025-09-09T10:43:18.946+0800	DEBUG	migrate/migrate.go:16	初始化日志模块成功
+2025-09-09T10:43:19.452+0800	DEBUG	migrate/migrate.go:25	连接数据库成功,开始迁移
+2025-09-09T10:43:27.071+0800	DEBUG	migrate/migrate.go:33	数据迁移成功，迁移表结构：	{"tables": "User,Post,Comment"}
+2025-09-09T10:43:27.071+0800	DEBUG	myredis/myredis.go:16	Redis DB:0Redis Addr:18.141.190.134:6379
+2025-09-09T10:43:27.071+0800	DEBUG	myredis/myredis.go:22	Redis server:Redis<18.141.190.134:6379 db:0>
+2025-09-09T10:48:41.444+0800	DEBUG	cmd/main.go:53	START!
+2025-09-09T10:48:41.444+0800	DEBUG	migrate/migrate.go:16	初始化日志模块成功
+2025-09-09T10:48:41.987+0800	DEBUG	migrate/migrate.go:25	连接数据库成功,开始迁移
+2025-09-09T10:48:49.368+0800	DEBUG	migrate/migrate.go:33	数据迁移成功，迁移表结构：	{"tables": "User,Post,Comment"}
+2025-09-09T10:48:49.368+0800	DEBUG	myredis/myredis.go:16	Redis DB:0Redis Addr:18.141.190.134:6379
+2025-09-09T10:48:49.368+0800	DEBUG	myredis/myredis.go:22	Redis server:Redis<18.141.190.134:6379 db:0>
+2025-09-09T10:50:54.663+0800	DEBUG	repository/userRep.go:30	当前用户存在，有效
+2025-09-09T10:51:05.819+0800	DEBUG	repository/userRep.go:30	当前用户存在，有效
+2025-09-09T10:51:26.722+0800	DEBUG	repository/userRep.go:30	当前用户存在，有效
+2025-09-09T10:54:47.533+0800	DEBUG	cmd/main.go:53	START!
+2025-09-09T10:54:47.533+0800	DEBUG	migrate/migrate.go:16	初始化日志模块成功
+2025-09-09T10:54:48.042+0800	DEBUG	migrate/migrate.go:25	连接数据库成功,开始迁移
+2025-09-09T10:54:56.798+0800	DEBUG	migrate/migrate.go:33	数据迁移成功，迁移表结构：	{"tables": "User,Post,Comment"}
+2025-09-09T10:54:56.798+0800	DEBUG	myredis/myredis.go:16	Redis DB:0Redis Addr:18.141.190.134:6379
+2025-09-09T10:54:56.798+0800	DEBUG	myredis/myredis.go:22	Redis server:Redis<18.141.190.134:6379 db:0>

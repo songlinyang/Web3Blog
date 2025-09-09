@@ -1,11 +1,12 @@
 package migrate
 
 import (
+	"myblog/internal/mysqldb"
+
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 
 	"myblog/models"
-	"myblog/mysqldb"
 	"myblog/zaplogger"
 )
 

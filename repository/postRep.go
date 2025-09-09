@@ -21,9 +21,20 @@ func (p *PostRep) ReadPostByTitle(post *models.Post, postResult *models.Post) er
 	return p.Db.Where("title=?", post.Title).First(post).Scan(postResult).Error
 }
 
+// 读取单篇文章
+func (p *PostRep) ReadPostByID(post *models.Post) error {
+	return p.Db.Debug().First(post).Error
+}
+
 // 读取当前用户下所有的文章 -userID
 func (p *PostRep) ReadPostByUserID(post *models.Post, postResult *[]models.Post) error {
 	return p.Db.Debug().Model(&models.Post{}).Where("user_id=?", post.UserID).Find(postResult).Scan(postResult).Error
+}
+
+// 读取当前用户下指定的文章 -userID
+func (p *PostRep) ReadPostByUserIDAndPostID(post *models.Post, postResult *[]models.Post) error {
+
+	return p.Db.Debug().Model(&models.Post{}).Where(models.Post{ID: post.ID, UserID: post.UserID}).Find(postResult).Scan(postResult).Error
 }
 
 // 读取博客全部用户的文章

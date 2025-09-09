@@ -7,8 +7,8 @@
 - **Go**: 1.21+ 
 - **MySQL**: 5.7+
 - **Redis**: 8.0+
-- **Gin**: +
-- **Gorm**: +
+- **Gin**: 1.10+
+- **Gorm**: 1.30+
 
 ## 📦 依赖安装
 
@@ -52,13 +52,13 @@ go run main.go
 fresh
 
 # 或者直接运行
-go run main.go
+go run ./cmd/main.go
 ```
 
 ### 生产环境
 ```bash
 # 编译项目
-go build -o myblog main.go
+go build -o myblog ./cmd/main.go
 
 # 运行编译后的二进制文件
 ./myblog
@@ -75,7 +75,6 @@ go build -o myblog main.go
 ```
 http://localhost:8080/swagger/index.html
 ```
-![https://github.com/songlinyang/Web3Blog/blob/main/docs/img.png?raw=true]()
 
 ### Swagger 接口使用说明
 
@@ -121,6 +120,7 @@ http://localhost:8080/swagger/index.html
 
 ```
 myblog/
+├── cmd/              # 主程序入口main.go
 ├── models/           # 数据模型定义
 │   ├── user.go
 │   ├── post.go
@@ -143,8 +143,9 @@ myblog/
 │   ├── cors.go       # 跨域处理
 │   └── latency.go    # 性能监控
 ├── migrate/          # 数据库迁移
-├── myredis/          # Redis 客户端
-├── mysqldb/          # MySQL 连接
+├── internal          # 内部类
+│   ├── myredis/      # Redis 客户端  
+│   ├── mysqldb/      # MySQL 连接          
 ├── tools/            # 工具函数
 ├── validators/       # 数据验证
 └── zaplogger/        # 日志配置

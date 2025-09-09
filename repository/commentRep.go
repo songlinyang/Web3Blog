@@ -18,5 +18,5 @@ func (c *CommentRep) CreateComment(comment *models.Comment) error {
 
 // 根据文章ID获取所有的评论列表
 func (c *CommentRep) QueryCommentByPostId(comment *models.Comment, commentResults *[]models.Comment) error {
-	return c.Db.Debug().Model(comment).Where("post_id=?", comment.PostID).Find(comment).Scan(commentResults).Error
+	return c.Db.Debug().Model(comment).Where("post_id=?", comment.PostID).Find(commentResults).Error
 }
